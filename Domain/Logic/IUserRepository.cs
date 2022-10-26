@@ -10,7 +10,7 @@ namespace Domain.Logic
     public class IUserRepository
     {
         public bool IsExists(int id);
-        public User? AddUser(int id, string name, string tel, Role role);
+        public User? AddUser(string name, string tel, Role role);
         public User? GetUserByLogin(int id);
     }
 }
