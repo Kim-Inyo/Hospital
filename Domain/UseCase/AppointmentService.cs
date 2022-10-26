@@ -23,15 +23,29 @@ namespace Domain.UseCase
             var result = appointment.IsValid();
             if (result.IsFailure)
                 return Result.Fail<Appointment>("Failed to Save Appointment");
-            return Result.Ok(appointment);
+            IEnumerable<FreeTime> FreeTime = _db.GetFreeTime(docid);
+            FreeTime written = new FreeTime(st, ed);
+            foreach(FreeTime dt in FreeTime)
+            {
+                if(dt.In(written))
+                    return Result.Ok(appointment);
+            }
+            return Result.Fail<Appointment>("This time is busy");
         }
 
-        public Result<IEnumerable<DateTime>> GetFreeTime(Spec spec)
+        public Result<IEnumerable<FreeTime>> GetFreeTime(Spec spec)
         {
             var result = spec.IsValid();
             if (result.IsFailure)
-                return Result.Fail<IEnumerable<DateTime>>("Invalid Spec");
+                return Result.Fail<IEnumerable<FreeTime>>("Invalid Spec");
             return Result.Ok(_db.GetFreeTime(spec));
+        }
+
+        public Result<IEnumerable<FreeTime>> GetFreeTime(int docid)
+        {
+            if (docid < 0)
+                return Result.Fail<IEnumerable<FreeTime>>("Invalid Doctor ID");
+            return Result.Ok(_db.GetFreeTime(docid));
         }
     }
 }
