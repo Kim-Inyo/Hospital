@@ -37,9 +37,9 @@ namespace UnitTests
         public void AddUserTest()
         {
             _userRepositoryMock.Setup(repository => repository.AddUser(
-                It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Role>())).Returns(() => null);
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Role>())).Returns(() => null);
 
-            var res = _userService.AddUser(0, "qwes", "213465", new Role());
+            var res = _userService.AddUser("qwes", "213465", new Role());
 
             Assert.True(res.IsFailure);
             Assert.Equal("Invalid User", res.Error);
