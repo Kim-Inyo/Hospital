@@ -25,7 +25,7 @@ namespace UnitTests
         [Fact]
         public void IsExistsTest()
         {
-            _userRepositoryMock.Setup(repository => repository.IsExists(It.IsAny<int>())).Returns(() => null);
+            _userRepositoryMock.Setup(repository => repository.IsExists(It.IsAny<int>())).Returns(() => false);
 
             var res = _userService.IsExists(0);
 

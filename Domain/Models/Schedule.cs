@@ -9,12 +9,15 @@ namespace Domain.Models
 {
     public class Schedule
     {
+        public int Id { get; set; }
         public int DoctorId = 0;
-        public DateTime Start = DateTime.MinValue;
-        public DateTime End = DateTime.MaxValue;
+        public DateTime Start;
+        public DateTime End;
 
-        public Schedule (int doctorId, DateTime start, DateTime end)
+        public Schedule() : this(0, 0, DateTime.MinValue, DateTime.MaxValue) { }
+        public Schedule (int id, int doctorId, DateTime start, DateTime end)
         {
+            Id = id;
             DoctorId = doctorId;
             Start = start;
             End = end;

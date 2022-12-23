@@ -17,6 +17,7 @@ namespace Domain.Models
         {
             Id = 0;
             Name = "";
+            Spec = new Spec();
         }
 
         public Doctor (int id, string name, Spec spec)

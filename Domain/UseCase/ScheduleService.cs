@@ -17,33 +17,24 @@ namespace Domain.UseCase
             _db = db;
         }
 
-        public Result<Schedule> GetScheduleOfDoctor(int doctorid)
+        public Result<IEnumerable<Schedule>> GetScheduleOfDoctor(int doctorid)
         {
             if (doctorid < 0)
-                return Result.Fail<Schedule>("Invalid Doctor Id");
-            Schedule schedule = _db.GetScheduleOfDoctor(doctorid);
-            if (schedule != null)
-                return Result.Ok(schedule);
-            return Result.Fail<Schedule>("Schedule Not Found");
+                return Result.Fail<IEnumerable<Schedule>>("Invalid Doctor Id");
+            IEnumerable<Schedule> schedules = _db.GetScheduleOfDoctor(doctorid);
+            if (schedules != null)
+                return Result.Ok(schedules);
+            return Result.Fail<IEnumerable<Schedule>>("Schedule Not Found");
         }
-        public Result AddSchedule(int doctorid, DateTime st, DateTime ed)
+
+        public Result EditSchedule(Schedule schedule)
         {
-            Schedule schedule = new Schedule(doctorid, st, ed);
             var result = schedule.IsValid();
             if (result.IsFailure)
                 return Result.Fail("Invalid Schedule");
-            _db.AddSchedule(doctorid, st, ed);
-            return Result.Ok();
-        }
-        public Result EditSchedule(int doctorid, DateTime st, DateTime ed)
-        {
-            Schedule schedule = new Schedule(doctorid, st, ed);
-            var result = schedule.IsValid();
-            if (result.IsFailure)
-                return Result.Fail("Invalid Schedule");
-            if (doctorid < 0)
+            if (schedule.DoctorId < 0)
                 return Result.Fail("Invalid Doctor Id");
-            _db.EditSchedule(doctorid, st, ed);
+            _db.EditSchedule(schedule);
             return Result.Ok();
         }
     }

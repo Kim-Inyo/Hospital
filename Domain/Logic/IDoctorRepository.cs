@@ -7,13 +7,10 @@ using Domain.Models;
 
 namespace Domain.Logic
 {
-    public class IDoctorRepository
+    public interface IDoctorRepository : IRepository<Doctor>
     {
-        public Doctor? AddDoctor(int id, string name, Spec spec);
-        public bool RemoveDoctor(int id);
-        public IEnumerable<Doctor> GetDoctorList();
         public Doctor? FindDoctor(int id);
-        public Doctor? FindDoctor(Spec spec);
+        public IEnumerable<Doctor> FindDoctor(Spec spec);
         public bool IsExists(int id);
     }
 }
