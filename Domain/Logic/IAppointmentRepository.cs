@@ -23,11 +23,9 @@ namespace Domain.Logic
         }
     }
 
-    public class IAppointmentRepository
-    {
-        public Appointment? SaveAppointment(DateTime st, DateTime ed, int docid, int patid);
-        
-        public IEnumerable<FreeTime> GetFreeTime(Spec spec);
-        public IEnumerable<FreeTime> GetFreeTime(int docid);
+    public interface IAppointmentRepository : IRepository<Appointment>
+    {        
+        public IEnumerable<DateTime> GetFreeTime(Spec spec);
+        public IEnumerable<DateTime> GetFreeTime(int docid);
     }
 }

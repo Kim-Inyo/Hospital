@@ -14,6 +14,8 @@ namespace Domain.Models
         public string Name;
         public string Tel;
         public Role Role;
+        public string UserName;
+        public string Password;
 
         public User()
         {
@@ -21,14 +23,18 @@ namespace Domain.Models
             Name = "";
             Tel = "";
             Role = Role.Patient;
+            UserName = "";
+            Password = "";
         }
 
-        public User(int id, string name, string tel, Role role)
+        public User(int id, string name, string tel, Role role, string username, string password)
         {
             Name = name;
             Id = id;
             Tel = tel;
             Role = role;
+            UserName = username;
+            Password = password;
         }
 
         public Result IsValid()

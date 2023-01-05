@@ -22,18 +22,6 @@ namespace UnitTests
         }
 
         [Fact]
-        public void SaveAppointmentTest()
-        {
-            _appointmentRepositoryMock.Setup(repository => repository.SaveAppointment(
-                It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<int>(), It.IsAny<int>())).Returns(() => null);
-
-            var res = _appointmentService.SaveAppointment(DateTime.MinValue, DateTime.MaxValue, 0, 0);
-            Assert.True(res.IsFailure);
-            Assert.Equal("Failed to Save Appointment", res.Error);
-            Assert.Equal("This time is busy", res.Error);
-        }
-
-        [Fact]
         public void GetFreeTimeTestBySpec()
         {
             _appointmentRepositoryMock.Setup(repository => repository.GetFreeTime(

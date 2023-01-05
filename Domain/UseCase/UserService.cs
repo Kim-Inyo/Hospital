@@ -24,7 +24,6 @@ namespace Domain.UseCase
 
             return Result.Ok(_db.IsExists(id));
         }
-
         public Result<User> AddUser(int id, string name, string tel, Role role)
         {
             User user = new User(id, name, tel, role);

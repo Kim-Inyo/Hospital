@@ -7,10 +7,9 @@ using Domain.Models;
 
 namespace Domain.Logic
 {
-    public class IScheduleRepository
+    public interface IScheduleRepository : IRepository<Schedule>
     {
-        public Schedule? GetScheduleOfDoctor(int doctorid);
-        public bool AddSchedule(int doctorid, DateTime st, DateTime ed);
-        public bool EditSchedule(int doctorid, DateTime st, DateTime ed);
+        public IEnumerable<Schedule> GetScheduleOfDoctor(int doctorid);
+        public bool EditSchedule(Schedule schedule);
     }
 }

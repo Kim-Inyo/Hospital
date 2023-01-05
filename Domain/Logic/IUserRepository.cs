@@ -7,7 +7,7 @@ using Domain.Models;
 
 namespace Domain.Logic
 {
-    public class IUserRepository
+    public interface IUserRepository : IRepository<User>
     {
         public bool IsExists(int id);
         public User? AddUser(int id, string name, string tel, Role role);

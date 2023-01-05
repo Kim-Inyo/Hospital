@@ -10,13 +10,16 @@ namespace Domain.Models
 {
     public class Appointment
     {
+        public int Id;
         public DateTime Start = DateTime.MinValue;
         public DateTime End = DateTime.MaxValue;
-        public int PatientId = 0;
-        public int DoctorId = 0;
+        public int PatientId;
+        public int DoctorId;
 
-        public Appointment(DateTime start, DateTime end, int patientId, int doctorId)
+        public Appointment() : this(0, DateTime.MinValue, DateTime.MaxValue, 0, 0) { }
+        public Appointment(int id, DateTime start, DateTime end, int patientId, int doctorId)
         {
+            Id = id;
             Start = start;
             End = end;
             PatientId = patientId;
