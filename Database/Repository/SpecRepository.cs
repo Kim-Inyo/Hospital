@@ -44,6 +44,11 @@ namespace Database.Repository
             return _context.Specs.FirstOrDefault(s => s.Id == id)?.ToDomain();
         }
 
+        public Spec? GetById(int id)
+        {
+            return _context.Specs.FirstOrDefault(s => s.Id == id)?.ToDomain();
+        }
+
         public void Save()
         {
             _context.SaveChanges();

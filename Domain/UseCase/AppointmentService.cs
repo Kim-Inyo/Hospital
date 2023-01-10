@@ -17,6 +17,31 @@ namespace Domain.UseCase
             _db = db;
         }
 
+        public Result<Appointment> SaveAppointment(Appointment appointment, Schedule schedule)
+        {
+            var result = appointment.IsValid();
+            if (result.IsFailure)
+                return Result.Fail<Appointment>("Invalid appointment: " + result.Error);
+
+            var result1 = schedule.IsValid();
+            if (result1.IsFailure)
+                return Result.Fail<Appointment>("Invalid schedule: " + result1.Error);
+
+            if (schedule.Start > appointment.Start || schedule.End < appointment.End)
+                return Result.Fail<Appointment>("Appointment out of schedule");
+
+            var apps = _db.GetFreeTime(appointment.DoctorId);
+            if (apps.Any(a => appointment.Start > a))
+                return Result.Fail<Appointment>("Appointment time already taken");
+
+            if (_db.Create(appointment))
+            {
+                _db.Save();
+                return Result.Ok(appointment);
+            }
+            return Result.Fail<Appointment>("Unable to save appointment");
+        }
+
         public Result<IEnumerable<DateTime>> GetFreeTime(Spec spec)
         {
             var result = spec.IsValid();

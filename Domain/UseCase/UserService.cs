@@ -17,6 +17,23 @@ namespace Domain.UseCase
             _db = userRepository;
         }
 
+        public Result<User> Register(User user)
+        {
+            var result = user.IsValid();
+            if (result.IsFailure)
+                return Result.Fail<User>("Invalid user: " + result.Error);
+
+            if (_db.IsExists(user.Name))
+                return Result.Fail<User>("Username already exists");
+
+            if (_db.Create(user))
+            {
+                _db.Save();
+                return Result.Ok(user);
+            }
+            return Result.Fail<User>("Unable to create user");
+        }
+
         public Result<bool> IsExists(int id)
         {
             if (id < 0)
@@ -35,6 +52,14 @@ namespace Domain.UseCase
             return Result.Fail<User>("Failed to add user");
         }
 
+        public Result<bool> IsExists(string name)
+        {
+            if (name == String.Empty)
+                return Result.Fail<bool>("Please fill your name");
+
+            return Result.Ok(_db.IsExists(name));
+        }
+
         public Result<User> GetUserByLogin(int id)
         {
             if (id < 0)
@@ -43,6 +68,11 @@ namespace Domain.UseCase
             if (user != null)
                 return Result.Ok(user);
             return Result.Fail<User>("User Not Found");
+        }
+
+        public Result<IEnumerable<User>> GetAll()
+        {
+            return Result.Ok(_db.GetAll());
         }
     }
 }

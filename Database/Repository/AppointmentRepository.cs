@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Database.Repository
 {
-    internal class AppointmentsRepository : IAppointmentRepository
+    internal class AppointmentRepository : IAppointmentRepository
     {
         private readonly ApplicationContext _context;
 
-        public AppointmentsRepository(ApplicationContext context)
+        public AppointmentRepository(ApplicationContext context)
         {
             _context = context;
         }
