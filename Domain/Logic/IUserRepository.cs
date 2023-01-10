@@ -10,6 +10,7 @@ namespace Domain.Logic
     public interface IUserRepository : IRepository<User>
     {
         public bool IsExists(int id);
+        public bool IsExists(string name);
         public User? GetUserByLogin(int id);
     }
 }

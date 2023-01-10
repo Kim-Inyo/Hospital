@@ -16,6 +16,29 @@ namespace Domain.UseCase
         {
             _db = db;
         }
+        public Result AddSchedule(Schedule schedule)
+        {
+            var result = schedule.IsValid();
+            if (result.IsFailure)
+                return Result.Fail("Invalid schedule: " + result.Error);
+
+            if (_db.Create(schedule))
+            {
+                _db.Save();
+                return Result.Ok();
+            }
+            return Result.Fail<Schedule>("Unable to add schedule");
+        }
+
+        public Result<Schedule> GetSchedule(int id)
+        {
+            if (id < 0)
+                return Result.Fail<Schedule>("Invalid Doctor Id");
+            Schedule schedule = _db.GetSchedule(id);
+            if (schedule != null)
+                return Result.Ok(schedule);
+            return Result.Fail<Schedule>("Schedule Not Found");
+        }
 
         public Result<IEnumerable<Schedule>> GetScheduleOfDoctor(int doctorid)
         {
