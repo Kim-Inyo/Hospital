@@ -41,6 +41,16 @@ namespace Domain.UseCase
 
             return Result.Ok(_db.IsExists(id));
         }
+        public Result<User> AddUser(int id, string name, string tel, Role role)
+        {
+            User user = new User(id, name, tel, role);
+            var result = user.IsValid();
+            if (result.IsFailure)
+                return Result.Fail<User>("Invalid User");
+            if (_db.AddUser(name, tel, role) != null)
+                return Result.Ok(user);
+            return Result.Fail<User>("Failed to add user");
+        }
 
         public Result<bool> IsExists(string name)
         {
