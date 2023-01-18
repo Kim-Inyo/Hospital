@@ -11,6 +11,7 @@ namespace Domain.UseCase
     public class AppointmentService
     {
         public readonly IAppointmentRepository _db;
+        private readonly Dictionary<int, Mutex> _mutexes = new();
 
         public AppointmentService (IAppointmentRepository db)
         {
@@ -34,11 +35,19 @@ namespace Domain.UseCase
             if (apps.Any(a => appointment.Start > a))
                 return Result.Fail<Appointment>("Appointment time already taken");
 
+            if (!_mutexes.ContainsKey(appointment.DoctorId))
+            {
+                _mutexes.Add(appointment.DoctorId, new Mutex());
+            }
+            _mutexes.First(d => d.Key == appointment.DoctorId).Value.WaitOne();
+
             if (_db.Create(appointment))
             {
                 _db.Save();
+                _mutexes.First(d => d.Key == appointment.DoctorId).Value.ReleaseMutex();
                 return Result.Ok(appointment);
             }
+            _mutexes.First(d => d.Key == appointment.DoctorId).Value.ReleaseMutex();
             return Result.Fail<Appointment>("Unable to save appointment");
         }
 

@@ -2,6 +2,7 @@
 using Domain.Models;
 using Domain.Logic;
 using HospitalProjectIT.Views;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Domain.Logic;
 
@@ -33,6 +34,7 @@ namespace HospitalSystem.Controllers
             return Ok(res.Value);
         }
 
+        [Authorize]
         [HttpPost("register")]
         public IActionResult AddSchedule(int doctor_id, DateTime start_time, DateTime end_time)
         {
@@ -46,6 +48,7 @@ namespace HospitalSystem.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpGet("update")]
         public IActionResult UpdateSchedule(int schedule_id, int? doctor_id, DateTime? start_time, DateTime? end_time)
         {

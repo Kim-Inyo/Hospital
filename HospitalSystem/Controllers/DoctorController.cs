@@ -2,6 +2,7 @@
 using Domain.Models;
 using Domain.Logic;
 using HospitalProjectIT.Views;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalSystem.Controllers
@@ -16,6 +17,7 @@ namespace HospitalSystem.Controllers
             _service = service;
         }
 
+        [Authorize]
         [HttpPost("create")]
         public IActionResult CreateDoctor(string name, Spec spec)
         {
@@ -28,6 +30,7 @@ namespace HospitalSystem.Controllers
             return Ok(res.Value);
         }
 
+        [Authorize]
         [HttpDelete("delete")]
         public IActionResult DeleteDoctor(int id)
         {
