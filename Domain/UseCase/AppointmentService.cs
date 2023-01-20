@@ -11,7 +11,7 @@ namespace Domain.UseCase
     public class AppointmentService
     {
         public readonly IAppointmentRepository _db;
-        public readonly Dictionary<int, Mutex> _mutexes = new();
+        public readonly static Dictionary<int, Mutex> _mutexes = new();
 
         public AppointmentService (IAppointmentRepository db)
         {
