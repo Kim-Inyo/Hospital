@@ -2,6 +2,7 @@
 using Domain.Models;
 using Domain.Logic;
 using HospitalProjectIT.Views;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalSystem.Controllers
@@ -16,6 +17,7 @@ namespace HospitalSystem.Controllers
             _rep = rep;
         }
 
+        [Authorize]
         [HttpPost("add")]
         public IActionResult AddSpec(string name)
         {
@@ -32,6 +34,7 @@ namespace HospitalSystem.Controllers
             return Problem(statusCode: 404, detail: "Error while creating");
         }
 
+        [Authorize]
         [HttpDelete("delete")]
         public IActionResult DeleteSpec(int id)
         {

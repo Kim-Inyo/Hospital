@@ -1,6 +1,7 @@
 ﻿using Domain.UseCase;
 using Domain.Models;
 using HospitalProjectIT.Views;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalSystem.Controllers
@@ -37,6 +38,7 @@ namespace HospitalSystem.Controllers
             });
         }
 
+        [Authorize]
         [HttpPost("register")]
         public IActionResult RegisterUser(string username, string password, string tel, string name, Role role)
         {
